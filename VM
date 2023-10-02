@@ -1,1 +1,26 @@
-hello
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+ 
+
+
+int password = 12345;      // Admin password
+float total_amount = 0.0; 
+
+// Product information
+float price_A = 1.0;
+int quantity_A = 10;
+float price_B = 2.0;
+int quantity_B = 15;
+float price_C = 1.5;
+int quantity_C = 7;
+
+// Function prototypes
+void displayMenu();
+void displayProducts();
+bool purchaseItem();
+void adminMode();
+void replenishItems();
+void changeItemPrices();
+void displayTotalSale();
+void displayItemAvailability();
