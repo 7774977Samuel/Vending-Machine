@@ -24,5 +24,3 @@ void replenishItems();
 void changeItemPrices();
 void displayTotalSale();
 void displayItemAvailability();
-The aim of this task is to develop a C vending machine simulator. The program must include a number of
-user-defined func�ons; it should not make use of arrays, pointers or C-structs.
