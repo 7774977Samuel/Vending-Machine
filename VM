@@ -24,3 +24,107 @@ void replenishItems();
 void changeItemPrices();
 void displayTotalSale();
 void displayItemAvailability();
+int main() {
+    int choice;
+
+    while (1) {
+        displayMenu();
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                purchaseItem();
+                break;
+            case 2:
+                adminMode();
+                break;
+            case 3:
+                printf("Exiting the program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
+// Display the main menu
+void displayMenu() {
+    printf("Main Menu\n");
+    printf("1. Purchase Item\n");
+    printf("2. Admin Mode\n");
+    printf("3. Exit\n");
+    printf("Enter your choice: ");
+}
+
+// Display available products and their prices
+void displayProducts() {
+    printf("Available Products:\n");
+    printf("1. A - $%.2f (Qty: %d)\n", price_A, quantity_A);
+    printf("2. B - $%.2f (Qty: %d)\n", price_B, quantity_B);
+    printf("3. C - $%.2f (Qty: %d)\n", price_C, quantity_C);
+}
+
+// Function for purchasing items
+bool purchaseItem() {
+    displayProducts();
+    int choice;
+    printf("Enter the product number to purchase (0 to cancel): ");
+    scanf("%d", &choice);
+
+    if (choice == 0) {
+        printf("Purchase canceled.\n");
+        return false;
+    }
+float price;
+    int *quantity;
+
+    switch (choice) {
+        case 1:
+            price = price_A;
+            quantity = &quantity_A;
+            break;
+        case 2:
+            price = price_B;
+            quantity = &quantity_B;
+            break;
+        case 3:
+            price = price_C;
+            quantity = &quantity_C;
+            break;
+        default:
+            printf("Invalid product choice.\n");
+            return false;
+    }
+
+    printf("You selected product %c - $%.2f\n", 'A' + choice - 1, price);
+    printf("Insert coins (1, 0.5, 0.25 Dh) to cover the price: ");
+
+    float insertedAmount = 0.0;
+    float coin;
+    while (insertedAmount < price) {
+        scanf("%f", &coin);
+        if (coin == 1 || coin == 0.5 || coin == 0.25) {
+            insertedAmount += coin;
+        } else {
+            printf("Invalid coin. Try again or press 0 to cancel: ");
+            int cancel;
+            scanf("%d", &cancel);
+            if (cancel == 0) {
+                printf("Purchase canceled.\n");
+                return false;
+            }
+        }
+    }
+
+    *quantity -= 1;
+    total_amount += price;
+
+    printf("You purchased product %c for $%.2f. Change: $%.2f\n", 'A' + choice - 1, price, insertedAmount - price);
+    if (*quantity <= Min) {
+        printf("Alert: Low quantity for product %c!\n", 'A' + choice - 1);
+    }
+
+    return true;
+}
