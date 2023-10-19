@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Constants
+
 #define MinQuantity 5
 
 // Product details
@@ -12,10 +12,8 @@ int itemBQuantity = 15;
 float itemCPrice = 1.5;
 int itemCQuantity = 7;
 
-// Admin password
 int adminPassword = 1234;
 
-// Sales total
 float totalSales = 0.0;
 
 // Function prototypes
@@ -34,15 +32,18 @@ int main() {
         displayMenu();
         scanf("%d", &choice);
 
-        if (choice == 1) {
-            purchaseItem();
-        } else if (choice == 2) {
-            adminMode();
-        } else if (choice == 3) {
-            printf("Exiting.\n");
-            exit(0);
-        } else {
-            printf("Invalid choice. \n");
+        switch (choice) {
+            case 1:
+                purchaseItem();
+                break;
+            case 2:
+                adminMode();
+                break;
+            case 3:
+                printf("Exiting.\n");
+                exit(0);
+            default:
+                printf("Invalid choice.\n");
         }
     }
 
@@ -70,24 +71,28 @@ void purchaseItem() {
     printf("Enter the item number to purchase (0 to cancel): ");
     scanf("%d", &itemChoice);
 
-    if (itemChoice == 1) {
-        itemPrice = itemAPrice;
-        itemQuantity = &itemAQuantity;
-        itemName = 'A';
-    } else if (itemChoice == 2) {
-        itemPrice = itemBPrice;
-        itemQuantity = &itemBQuantity;
-        itemName = 'B';
-    } else if (itemChoice == 3) {
-        itemPrice = itemCPrice;
-        itemQuantity = &itemCQuantity;
-        itemName = 'C';
-    } else if (itemChoice == 0) {
-        printf("Purchase canceled.\n");
-        return;
-    } else {
-        printf("Invalid item choice.\n");
-        return;
+    switch (itemChoice) {
+        case 1:
+            itemPrice = itemAPrice;
+            itemQuantity = &itemAQuantity;
+            itemName = 'A';
+            break;
+        case 2:
+            itemPrice = itemBPrice;
+            itemQuantity = &itemBQuantity;
+            itemName = 'B';
+            break;
+        case 3:
+            itemPrice = itemCPrice;
+            itemQuantity = &itemCQuantity;
+            itemName = 'C';
+            break;
+        case 0:
+            printf("Purchase cancelled.\n");
+            return;
+        default:
+            printf("Invalid item choice.\n");
+            return;
     }
 
     printf("You selected Item %c - $%.2f\n", itemName, itemPrice);
@@ -105,7 +110,7 @@ void purchaseItem() {
             printf("Purchase canceled.\n");
             return;
         } else {
-            printf("Invalid coin. Try again.\n");
+            printf("Invalid coin.\n");
         }
     }
 
@@ -125,7 +130,7 @@ void adminMode() {
     scanf("%d", &password);
 
     if (password != adminPassword) {
-        printf("Incorrect admin password. Exiting Admin Mode.\n");
+        printf("Incorrect admin password.\n");
         return;
     }
 
@@ -141,27 +146,32 @@ void adminMode() {
         printf("Enter your choice: ");
         scanf("%d", &adminChoice);
 
-        if (adminChoice == 1) {
-            replenishItems();
-        } else if (adminChoice == 2) {
-            changeItemPrices();
-        } else if (adminChoice == 3) {
-            displayTotalSale();
-        } else if (adminChoice == 4) {
-            displayItemAvailability();
-        } else if (adminChoice == 0) {
-            printf("Exiting Admin Mode.\n");
-            return;
-        } else {
-            printf("Invalid choice. Please try again.\n");
+        switch (adminChoice) {
+            case 1:
+                replenishItems();
+                break;
+            case 2:
+                changeItemPrices();
+                break;
+            case 3:
+                displayTotalSale();
+                break;
+            case 4:
+                displayItemAvailability();
+                break;
+            case 0:
+                printf("Exiting Admin Mode.\n");
+                return;
+            default:
+                printf("Invalid choice.\n");
         }
     }
 }
 
 void replenishItems() {
-    itemAQuantity = rand() % 20 + 1;
-    itemBQuantity = rand() % 20 + 1;
-    itemCQuantity = rand() % 20 + 1;
+    itemAQuantity += rand() % 20 + 1;
+    itemBQuantity += rand() % 20 + 1;
+    itemCQuantity += rand() % 20 + 1;
     printf("Item quantities replenished.\n");
 }
 
@@ -178,7 +188,7 @@ void changeItemPrices() {
 void displayTotalSale() {
     printf("Total Sales: $%.2f\n", totalSales);
     int resetTotal;
-    printf("Reset the total sale to zero? (1 for Yes, 0 for No): ");
+    printf("Would you like to reset the total sale to zero? (1 for Yes, 0 for No): ");
     scanf("%d", &resetTotal);
 
     if (resetTotal == 1) {
