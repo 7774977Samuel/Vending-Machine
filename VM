@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+
 #define MinQuantity 5
 
 // Product details
@@ -17,27 +18,27 @@ int adminPassword = 1234;
 float totalSales = 0.0;
 
 // Function prototypes
-void displayMenu();
-void purchaseItem();
-void adminMode();
-void replenishItems();
-void changeItemPrices();
-void displayTotalSale();
-void displayItemAvailability();
+void displaymenu();
+void purchaseitem();
+void adminmode();
+void replenishitems();
+void changeitemprices();
+void displaytotalsale();
+void displayitemavailability();
 
 int main() {
     int choice;
 
     while (1) {
-        displayMenu();
+        displaymenu();
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                purchaseItem();
+                purchaseitem();
                 break;
             case 2:
-                adminMode();
+                adminmode();
                 break;
             case 3:
                 printf("Exiting.\n");
@@ -50,7 +51,7 @@ int main() {
     return 0;
 }
 
-void displayMenu() {
+void displaymenu(){
     printf("Main Menu\n");
     printf("1. Purchase Item\n");
     printf("2. Admin Mode\n");
@@ -58,7 +59,7 @@ void displayMenu() {
     printf("Enter your choice: ");
 }
 
-void purchaseItem() {
+void purchaseitem() {
     int itemChoice;
     float itemPrice;
     int* itemQuantity;
@@ -124,7 +125,7 @@ void purchaseItem() {
     }
 }
 
-void adminMode() {
+void adminmode() {
     int password;
     printf("Enter the admin password: ");
     scanf("%d", &password);
@@ -148,16 +149,16 @@ void adminMode() {
 
         switch (adminChoice) {
             case 1:
-                replenishItems();
+                replenishitems();
                 break;
             case 2:
-                changeItemPrices();
+                changeitemprices();
                 break;
             case 3:
-                displayTotalSale();
+                displaytotalsale();
                 break;
             case 4:
-                displayItemAvailability();
+                displayitemavailability();
                 break;
             case 0:
                 printf("Exiting Admin Mode.\n");
@@ -168,14 +169,28 @@ void adminMode() {
     }
 }
 
-void replenishItems() {
-    itemAQuantity += rand() % 20 + 1;
-    itemBQuantity += rand() % 20 + 1;
-    itemCQuantity += rand() % 20 + 1;
+void replenishitems() {
+  int maxReplenish = 20;
+    int replenishAmountA = maxReplenish - itemAQuantity;
+    int replenishAmountB = maxReplenish - itemBQuantity;
+    int replenishAmountC = maxReplenish - itemCQuantity;
+
+    if (replenishAmountA > 0) {
+        itemAQuantity += rand() % (replenishAmountA + 1);
+    }
+    
+    if (replenishAmountB > 0) {
+        itemBQuantity += rand() % (replenishAmountB + 1);
+    }
+    
+    if (replenishAmountC > 0) {
+        itemCQuantity += rand() % (replenishAmountC + 1);
+    }
+
     printf("Item quantities replenished.\n");
 }
 
-void changeItemPrices() {
+void changeitemprices() {
     printf("Enter the new price for Item A: ");
     scanf("%f", &itemAPrice);
     printf("Enter the new price for Item B: ");
@@ -185,7 +200,7 @@ void changeItemPrices() {
     printf("Item prices updated.\n");
 }
 
-void displayTotalSale() {
+void displaytotalsale() {
     printf("Total Sales: $%.2f\n", totalSales);
     int resetTotal;
     printf("Would you like to reset the total sale to zero? (1 for Yes, 0 for No): ");
@@ -197,7 +212,7 @@ void displayTotalSale() {
     }
 }
 
-void displayItemAvailability() {
+void displayitemavailability() {
     printf("Item A - Quantity: %d\n", itemAQuantity);
     printf("Item B - Quantity: %d\n", itemBQuantity);
     printf("Item C - Quantity: %d\n", itemCQuantity);
